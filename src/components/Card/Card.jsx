@@ -8,7 +8,7 @@ export const Card = (color) => {
     <S.Card
       color={color.color}
       active={active}
-      onClick={()=>setActive(true)}
+      onClick={()=>setActive(!active)}
     />
     </>
   )
