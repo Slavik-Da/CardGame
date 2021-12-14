@@ -164,24 +164,34 @@ const getRandomColorsNames = () => {
 
 export const MainPage = () => {
   const [colors, setColors] = useState([])
+  const selectedColor = localStorage.getItem('selectedColor')
+  const onColorNameClick = () => {
+
+  }
+
+  console.log('selectedColor====', selectedColor)
   console.log('colors: ', colors)
   useEffect(() => {
       setColors(getRandomColorsNames())
     },
     [])
+
   return (
     <>
       <S.MainPage>
         <S.LeftSide>
-          Left side
+          {colors && colors.map((c)=> {
+            return (
+              <div>{c}</div>
+            )
+          })}
         </S.LeftSide>
         <S.RightSide>
           <S.CardsGroup>
-            {colors.map((color, index) => (
+            {colors && colors.map((color, index) => (
               <Card
                 key={index}
                 color={color}
-
               />
             ))}
           </S.CardsGroup>

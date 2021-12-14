@@ -17,6 +17,6 @@ export const RightSide = styled.div`
 
 export const CardsGroup = styled.div`
   display: flex;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
   width: 135px;
 `

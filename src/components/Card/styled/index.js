@@ -5,6 +5,9 @@ export const Card = styled.div`
   width: 25px;
   background-color: ${props => (props.color ? props.color : 'red')};
   flex: 0 1 18.5%;
-  border: ${props => (props.active ? '1px solid grey' : '')};
+  border: ${props => (props.active ? '1px solid black' : '')};
   box-sizing: border-box;
+  &:hover {
+    filter: brightness(90%);
+  }
 `
