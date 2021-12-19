@@ -155,43 +155,64 @@ const getRandomNumber = (min, max) => {
 }
 
 const getRandomColorsNames = () => {
-  const generatedColors = []
-  for (let i = 0; i < 25; i++) {
-    generatedColors.push(allColors[getRandomNumber(0, 145)])
-  }
+  const generatedColors = allColors.reduce((prev, item, index) => {
+    if(index >= 25) {
+      return prev
+    } else {
+      prev[index] = { color: item, id: index, isTouched: false ,isGuessed: false };
+      return prev;
+    }
+  }, [])
+
+  // for (let i = 0; i < 25; i++) {
+  //   const randNumber = getRandomNumber(0, allColors.length)
+  //   const randColor = allColors[randNumber]
+  //   console.log('randColor: ', randColor, randNumber)
+  //   allColors.splice(randNumber, 1)
+  //
+  //   generatedColors.push(randColor)
+  // }
   return generatedColors
 }
 
 export const MainPage = () => {
-  const [colors, setColors] = useState([])
-  const selectedColor = localStorage.getItem('selectedColor')
-  const onColorNameClick = () => {
+  const [colorCards, setColorCards] = useState([])
 
-  }
-
-  console.log('selectedColor====', selectedColor)
-  console.log('colors: ', colors)
+  console.log('colorCards: ', colorCards)
   useEffect(() => {
-      setColors(getRandomColorsNames())
+      setColorCards(getRandomColorsNames())
     },
     [])
+  const onCardClickHandler = () => {
+
+  }
+  const onColorNameClickHandler = () => {
+
+  }
 
   return (
     <>
       <S.MainPage>
         <S.LeftSide>
-          {colors && colors.map((c)=> {
+          {colorCards && colorCards.map((c, index)=> {
             return (
-              <div>{c}</div>
+              <div
+                key={index}
+                onClick={onColorNameClickHandler}
+              >
+                {c}
+              </div>
             )
           })}
         </S.LeftSide>
         <S.RightSide>
           <S.CardsGroup>
-            {colors && colors.map((color, index) => (
+            {colorCards && colorCards.map((color, index) => (
               <Card
                 key={index}
                 color={color}
+                onClick={onCardClickHandler}
+                active={false}
               />
             ))}
           </S.CardsGroup>
