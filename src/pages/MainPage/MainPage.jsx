@@ -156,65 +156,75 @@ const getRandomNumber = (min, max) => {
 
 const getRandomColorsNames = () => {
   const generatedColors = allColors.reduce((prev, item, index) => {
-    if(index >= 25) {
+    if (index >= 25) {
       return prev
     } else {
-      prev[index] = { color: item, id: index, isTouched: false ,isGuessed: false };
+      const randNumber = getRandomNumber(0, allColors.length)
+      const randColor = allColors[randNumber]
+      prev[index] = {
+        color: randColor,
+        id: index,
+        isTouched: false,
+        isGuessed: false
+      };
+      allColors.splice(randNumber, 1)
       return prev;
     }
   }, [])
 
-  // for (let i = 0; i < 25; i++) {
-  //   const randNumber = getRandomNumber(0, allColors.length)
-  //   const randColor = allColors[randNumber]
-  //   console.log('randColor: ', randColor, randNumber)
-  //   allColors.splice(randNumber, 1)
-  //
-  //   generatedColors.push(randColor)
-  // }
   return generatedColors
 }
 
 export const MainPage = () => {
-  const [colorCards, setColorCards] = useState([])
 
-  console.log('colorCards: ', colorCards)
   useEffect(() => {
       setColorCards(getRandomColorsNames())
-    },
-    [])
-  const onCardClickHandler = () => {
+    }, [])
 
+  const [colorCards, setColorCards] = useState(null)
+  const [selectedColorOnList, setSelectedColorOnList] = useState(null)
+  const [pickedColor, setPickedColor] = useState(null)
+  const [score, setScore] = useState(null)
+
+  const selectedColorOnListHandler = (e) => {
+    setSelectedColorOnList(e.target.innerText)
   }
-  const onColorNameClickHandler = () => {
 
+  const pickedColorHandler = (e) => {
+    setPickedColor(e)
+    console.log(e)
   }
 
+  console.log('selectedColorOnList======',selectedColorOnList)
+  console.log('pickedColor======',pickedColor)
   return (
     <>
       <S.MainPage>
         <S.LeftSide>
-          {colorCards && colorCards.map((c, index)=> {
+          {colorCards && colorCards.map((c, index) => {
             return (
               <div
-                key={index}
-                onClick={onColorNameClickHandler}
+                key={c.id}
+                onClick={selectedColorOnListHandler}
               >
-                {c}
+                {c.color}
               </div>
             )
           })}
         </S.LeftSide>
         <S.RightSide>
           <S.CardsGroup>
-            {colorCards && colorCards.map((color, index) => (
-              <Card
-                key={index}
-                color={color}
-                onClick={onCardClickHandler}
-                active={false}
-              />
-            ))}
+            {colorCards && colorCards.map((card) => {
+              return (
+                <Card
+                  key={card.id}
+                  color={card.color}
+                  onClick={() => {
+                    setPickedColor('blabla')
+                  }}
+                />
+              )
+            })}
           </S.CardsGroup>
         </S.RightSide>
       </S.MainPage>
